@@ -94,32 +94,6 @@ def scanner(host):
     print "[*] Time taken= "+str(timetaken)
     main()
     
-def email(host):
-    if operSys=="Windows":
-		subprocess.call('cls', shell=True)
-    if operSys=="Linux":
-		subprocess.call('clear', shell=True)
-    print"[*] Email addresses found on page: "
-    try:
-        e=urllib2.urlopen('http://'+str(host))
-    except:
-        print "Error"
-    try:
-        e=urllib2.urlopen('http://'+str(host))
-    except:
-        print "Error"
-    try:
-        cont=html2text.html2text(e.read())
-    except UnicodeDecodeError :
-        try:
-            cont=html2text.html2text(urllib2.urlopen('http://'+str(host)).read().decode('utf-8'))
-        except :
-            cont=urllib2.urlopen('http://'+str(host)).read()
-    cont=cont.split('\n')
-    for line in cont:
-        if '@' in line:
-            print line
-    main()
 
 def banner(host):
     if operSys=="Windows":
@@ -197,7 +171,11 @@ def spider(host):
 		subprocess.call('cls', shell=True)
     if operSys=="Linux":
 		subprocess.call('clear', shell=True)
-    print "[*] Use the result to find promising URLs to try hacking using SQL injection or Xss etc.\n[*] Depth is the level to go inside the website( between 10-20 is enough usually but depends on you).\n[*] Output will also be saved in text files in the same folder as this software.\n"
+    spider1(host)
+    main()
+    
+def spider1(host):
+    print "[*] Use the result to find promising URLs/Emails to try hacking using SQL injection or Xss or Social Engineering etc.\n[*] Depth is the level to go inside the website( usually a small integer ).\n[*] Output will also be saved in text files in the same folder as this software.\n"
     depth = raw_input("Enter the depth level in numbers: ")
     count=1
     url="http://"+host
@@ -208,25 +186,70 @@ def spider(host):
         print i
         text.write(i+'\n')
     text.close()
-    while(count<=int(depth)):
+    while(count<int(depth)):
         text=open("depth"+str(count)+".txt", "r")
         text1=open("depth"+str(count+1)+".txt", "w+")
-        if text.read()=="":
+        f=text.read()
+        if f=="":
             print "\n****Finished****"
-            main()
-        f=text.read().split("\n")
+            return depth
+        f=f.split("\n")
         for j in f:
             if "http" not in j:
                 j="http://"+host+j
 
-            for k in re.findall('''href=["'](.[^"']+)["']''', urllib2.urlopen(j).read(), re.I):
-                print k
-                text1.write(k+"\n")
+            try:
+                for k in re.findall('''href=["'](.[^"']+)["']''', urllib2.urlopen(j).read(), re.I):
+                    print k
+                    text1.write(k+"\n")
+            except:
+                continue
         text.close()
         text1.close()		
         count+=1
+    return depth
+
+def email(host):
+    if operSys=="Windows":
+		subprocess.call('cls', shell=True)
+    if operSys=="Linux":
+		subprocess.call('clear', shell=True)
+    depth = spider1(host)
+    count = 1
+    emails=open("emails.txt","w+")
+    print"[*] Email addresses found on page: "
+    while (count<=int(depth)):
+        text=open("depth"+str(count)+".txt", "r")
+        f=text.read()
+        if f=="":
+            print "\n****Finished****"
+            main()
+        f=f.split("\n")
+        for j in f:
+            try:
+                e=urllib2.urlopen(j)
+            except:
+                continue
+
+            try:
+                cont=html2text.html2text(e.read())
+            except UnicodeDecodeError :
+                try:
+                    cont=html2text.html2text(urllib2.urlopen(j).read().decode('utf-8'))
+                except :
+                    try:
+                        cont=urllib2.urlopen(j).read()
+                    except:
+                        continue
+                    
+            cont=cont.split('\n')
+            for line in cont:
+                if '@' in line:
+                        print line
+                        emails.write(line+"\n")
+                    
+        count+=1
     main()
-	
 def main():
     print "-"*60+"\n"
     print "                  Dark Fantasy - Hack Tool                    "

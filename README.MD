@@ -16,6 +16,6 @@
     
   e. Web Spider: For gathering web application hacking information.
   
-  f. Email scraper: To get all emails related to a webpage
+  f. Email scraper: To get all emails related to a website
   
 ------------------END----------------------
