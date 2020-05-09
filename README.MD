@@ -18,6 +18,4 @@
   
   f. Email scraper: To get all emails related to a webpage
   
-  g. IMDB Rating: Easy way to access the movie database.
-  
 ------------------END----------------------
