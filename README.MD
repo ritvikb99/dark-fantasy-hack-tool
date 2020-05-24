@@ -1,9 +1,9 @@
-------------------DARK FANTASY HACK TOOL----------------------
-1. Installation Guide:
+# DARK FANTASY HACK TOOL
+### Installation Guide:
 
     $ pip install -r requirements.txt
 
-2. Explore the Software:
+### Explore the Software:
   a. DDOS Tool: To take down small websites with HTTP FLOOD (Packets).
   
   b. Port scanner: To know the open/vulnerable ports of a site.
