@@ -1,7 +1,7 @@
 # DARK FANTASY HACK TOOL
 ### Installation Guide:
 
-    $ pip install -r requirements.txt
+    $ pipenv install -r requirements.txt
 
 ### Explore the Software:
   a. DDOS Tool: To take down small websites with HTTP FLOOD (Packets).
