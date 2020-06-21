@@ -23,11 +23,19 @@ user_agents = (
 )
 
 
-def dos(host):
+operSys = platform.system()
+
+
+def clear_scr():
     if operSys == "Windows":
         subprocess.call('cls', shell=True)
     if operSys == "Linux":
         subprocess.call('clear', shell=True)
+
+
+def dos(host):
+    clear_scr()
+
     print("[*]This program will use HTTP FLOOD to dos the host.\n[*]It would work only on small websites if done only for one computer.\n[*]To take down larger websites run the attack from multiple computers.\n[*] For better performance open multiple instances of this software and attack at the same time.\n")
     print("[*]Host to attack: "+host)
     ip = socket.gethostbyname(host)
@@ -56,10 +64,8 @@ def dos(host):
 
 
 def scanner(host):
-    if operSys == "Windows":
-        subprocess.call('cls', shell=True)
-    if operSys == "Linux":
-        subprocess.call('clear', shell=True)
+    clear_scr()
+
     t1 = datetime.now()
     socket.setdefaulttimeout(2)
     print("[*] Scanning "+host)
@@ -95,10 +101,8 @@ def scanner(host):
 
 
 def banner(host):
-    if operSys == "Windows":
-        subprocess.call('cls', shell=True)
-    if operSys == "Linux":
-        subprocess.call('clear', shell=True)
+    clear_scr()
+
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     except:
@@ -121,10 +125,8 @@ def banner(host):
 
 
 def ftp(server):
-    if operSys == "Windows":
-        subprocess.call('cls', shell=True)
-    if operSys == "Linux":
-        subprocess.call('clear', shell=True)
+    clear_scr()
+
     print("[*]Put the password file in the same directory.\n[*]The passwords should be on different lines.\n")
     passwords = []
     passw = input("Enter the password file name(eg: pass.txt, wordlist.txt): ")
@@ -168,10 +170,8 @@ def ftp(server):
 
 
 def spider(host):
-    if operSys == "Windows":
-        subprocess.call('cls', shell=True)
-    if operSys == "Linux":
-        subprocess.call('clear', shell=True)
+    clear_scr()
+
     spider1(host)
     main()
 
@@ -213,10 +213,8 @@ def spider1(host):
 
 
 def email(host):
-    if operSys == "Windows":
-        subprocess.call('cls', shell=True)
-    if operSys == "Linux":
-        subprocess.call('clear', shell=True)
+    clear_scr()
+
     depth = spider1(host)
     count = 1
     emails = open("emails.txt", "w+")
@@ -281,6 +279,5 @@ def main():
         print("Wrong choice")
 
 
-operSys = platform.system()
 if __name__ == '__main__':
     main()
