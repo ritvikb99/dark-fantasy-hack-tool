@@ -1,21 +1,23 @@
 # DARK FANTASY HACK TOOL
-### Installation Guide:
+Written by [@ritvikb99](https://github.com/ritvikb99) and [@CodesWhite](https://github.com/codeswhite)
+
+#### For security purposes only !
+
+## Installation:
 
     $ pipenv install -r requirements.txt
 
-### Explore the Software:
-  a. DDOS Tool: To take down small websites with HTTP FLOOD (Packets).
+## Features:
+- DOS Tool: To take down small websites by flooding with HTTP connections.
   
-  b. Port scanner: To know the open/vulnerable ports of a site.
+- Port scanner: To know the open/vulnerable ports of a site.
   
-  c. FTP Password Cracker: To hack file system of websites..
+- FTP Password Cracker: To hack file system of websites..
   
-  d. Banner Grabber: To get the service or software running on a port.
+- Banner Grabber: To get the service or software running on a port.
   
     (After knowing the software (run google) for its vulnerabilities.)
     
-  e. Web Spider: For gathering web application hacking information.
+- Web Spider: For gathering web application hacking information.
   
-  f. Email scraper: To get all emails related to a website
-  
-------------------END----------------------
+- Email scraper: To get all emails related to a website
