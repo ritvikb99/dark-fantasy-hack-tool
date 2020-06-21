@@ -1,16 +1,13 @@
-import sys
 import socket
 from datetime import datetime
-import os
 import urllib.request
 import urllib.error
 import urllib.parse
 import subprocess
 import html2text
-import random
+from random import randrange
 from time import *
 from string import *
-from random import *
 import re
 import platform
 
