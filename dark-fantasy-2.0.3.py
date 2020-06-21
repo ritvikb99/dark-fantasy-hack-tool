@@ -3,8 +3,8 @@ from datetime import datetime
 import urllib.request
 import urllib.error
 import urllib.parse
-import subprocess
-import html2text
+from subprocess import call
+from html2text import html2text
 from random import choice
 from time import *
 from string import *
@@ -28,9 +28,9 @@ operSys = platform.system()
 
 def clear_scr():
     if operSys == "Windows":
-        subprocess.call('cls', shell=True)
+        call('cls', shell=True)
     if operSys == "Linux":
-        subprocess.call('clear', shell=True)
+        call('clear', shell=True)
 
 
 def dos(host):
@@ -233,10 +233,10 @@ def email(host):
                 continue
 
             try:
-                cont = html2text.html2text(e.read())
+                cont = html2text(e.read())
             except UnicodeDecodeError:
                 try:
-                    cont = html2text.html2text(
+                    cont = html2text(
                         urllib.request.urlopen(j).read().decode('utf-8'))
                 except:
                     try:
