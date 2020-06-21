@@ -254,15 +254,24 @@ def email(host):
     main()
 
 
+def ask_host():
+    hostname = input(
+        "Enter hostname or IP address (google.com, www.yoursite.com, 192.168.1.1): ")
+    if '://' in hostname:
+        hostname = hostname.split('://')[1]
+    return hostname
+
+
 def main():
     print("-"*60+"\n")
     print("                  Dark Fantasy - Hack Tool                    ")
     print("-"*60+"\n")
     print("1.Port Scanning\n2.DDOS\n3.Banner Grabbing\n4.Web spider(gather all URLs for web hacking)\n5.FTP Password Cracker\n6.Email Scraping")
     choice = input("Enter Your Choice: ")
-    hostname = input(
-        "Enter Host Site or IP adress (www.google.com, www.yoursite.com, 192.168.1.1)(dont add http:// or https://): ")
-    hostname = str(hostname)
+    if choice not in range(6):
+        return print('Bye!')
+
+    hostname = ask_host()
     if choice == '1':
         scanner(hostname)
     elif choice == '6':
