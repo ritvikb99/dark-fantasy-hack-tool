@@ -119,7 +119,7 @@ def banner(host):
         if int(port) == 80:
             s.send('HEAD / HTTP/1.0\r\n\r\n')
         data = s.recv(1024)
-        print("\Banner:\n"+str(data))
+        print("Banner:\n"+str(data))
 
         s.close()
     except:
