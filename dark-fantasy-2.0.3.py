@@ -10,6 +10,7 @@ from time import *
 from string import *
 import re
 import platform
+from pathlib import Path
 
 
 user_agents = (
@@ -116,18 +117,22 @@ def banner(host):
         print("Connection failed")
 
 
+def ask_file(title):
+    while 1:
+        path = Path(input(
+            f"Enter the {title} file name (eg: pass.txt, wordlist.txt)\n>"))
+        if not path.is_file():
+            print('[!] No such file!')
+            continue
+        return path
+
+
 def ftp(server):
     clear_scr()
 
     print("[*]Put the password file in the same directory.\n[*]The passwords should be on different lines.\n")
-    passwords = []
-    passw = input("Enter the password file name(eg: pass.txt, wordlist.txt): ")
+    passwords = ask_file().read_text().splitlines()
     username = input("Enter the username to hack(eg: admin, root): ")
-    f = open(str(passw))
-    f = f.read()
-    f = f.split('\n')
-    for i in f:
-        passwords.append(str(i))
 
     server = socket.gethostbyname(server)
 
@@ -165,33 +170,28 @@ def spider(host):
     depth = input("Enter the depth level in numbers: ")
     count = 1
     url = "http://"+host
-    text = open("depth1.txt", "w+")
-    for i in re.findall('''href=["'](.[^"']+)["']''', urllib.request.urlopen(url).read(), re.I):
-        if "http" not in i:
-            i = "http://"+host+i
-        print(i)
-        text.write(i+'\n')
-    text.close()
+    with Path(f"depth1.txt").open('w') as out_file:
+        for i in re.findall('''href=["'](.[^"']+)["']''', urllib.request.urlopen(url).read(), re.I):
+            if "http" not in i:
+                i = "http://"+host+i
+            print(i)
+            out_file.write(i+'\n')
     while(count < int(depth)):
-        text = open("depth"+str(count)+".txt", "r")
-        text1 = open("depth"+str(count+1)+".txt", "w+")
-        f = text.read()
-        if f == "":
-            print("\n****Finished****")
-            return depth
-        f = f.split("\n")
-        for j in f:
-            if "http" not in j:
-                j = "http://"+host+j
-
-            try:
-                for k in re.findall('''href=["'](.[^"']+)["']''', urllib.request.urlopen(j).read(), re.I):
-                    print(k)
-                    text1.write(k+"\n")
-            except:
-                continue
-        text.close()
-        text1.close()
+        with Path("depth"+str(count)+".txt").open() as read_file:
+            with Path("depth"+str(count+1)+".txt", "w+") as write_file:
+                read = out_file.read().splitlines()
+                if not read:
+                    print("\n****Finished****")
+                    return depth
+                for link in read:
+                    if "http" not in link:
+                        link = "http://"+host+link
+                    try:
+                        for k in re.findall('''href=["'](.[^"']+)["']''', urllib.request.urlopen(link).read(), re.I):
+                            print(k)
+                            write_file.write(k+"\n")
+                    except:
+                        continue
         count += 1
     return depth
 
@@ -201,39 +201,38 @@ def email(host):
 
     depth = input("Enter the depth level in numbers: ")
     count = 1
-    emails = open("emails.txt", "w+")
-    print("[*] Email addresses found on page: ")
-    while (count <= int(depth)):
-        text = open("depth"+str(count)+".txt", "r")
-        f = text.read()
-        if f == "":
-            return print("\n****Finished****")
-        f = f.split("\n")
-        for j in f:
-            try:
-                e = urllib.request.urlopen(j)
-            except:
-                continue
-
-            try:
-                cont = html2text(e.read())
-            except UnicodeDecodeError:
+    with Path("emails.txt").open("w+") as emails:
+        print("[*] Email addresses found on page: ")
+        while (count <= int(depth)):
+            f = Path("depth"+str(count)+".txt").read_text()
+            if not f:
+                return print("\n****Finished****")
+            f = f.splitlines()
+            for j in f:
                 try:
-                    cont = html2text(
-                        urllib.request.urlopen(j).read().decode('utf-8'))
+                    e = urllib.request.urlopen(j)
                 except:
+                    continue
+
+                try:
+                    cont = html2text(e.read())
+                except UnicodeDecodeError:
                     try:
-                        cont = urllib.request.urlopen(j).read()
+                        cont = html2text(
+                            urllib.request.urlopen(j).read().decode('utf-8'))
                     except:
-                        continue
+                        try:
+                            cont = urllib.request.urlopen(j).read()
+                        except:
+                            continue
 
-            cont = cont.split('\n')
-            for line in cont:
-                if '@' in line:
-                    print(line)
-                    emails.write(line+"\n")
+                cont = cont.splitlines()
+                for line in cont:
+                    if '@' in line:
+                        print(line)
+                        emails.write(line+"\n")
 
-        count += 1
+                count += 1
 
 
 def ask_host():
