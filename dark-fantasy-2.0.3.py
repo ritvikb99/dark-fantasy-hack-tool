@@ -251,25 +251,25 @@ def main():
         print("-"*60+"\n")
         print("1.Port Scanning\n2.DDOS\n3.Banner Grabbing\n4.Web spider(gather all URLs for web hacking)\n5.FTP Password Cracker\n6.Email Scraping")
         try:
-            choice = input("Enter Your Choice: ")
-        except (EOFError, KeyboardInterrupt):
+            choice = int(input("Enter Your Choice: "))
+        except (ValueError, EOFError, KeyboardInterrupt):
             return print('\n[!] Interrupted!')
 
         if choice not in range(6):
             return print('Bye!')
 
         hostname = ask_host()
-        if choice == '1':
+        if choice == 1:
             scanner(hostname)
-        elif choice == '6':
+        elif choice == 6:
             email(hostname)
-        elif choice == '3':
+        elif choice == 3:
             banner(hostname)
-        elif choice == '5':
+        elif choice == 5:
             ftp(hostname)
-        elif choice == '2':
+        elif choice == 2:
             dos(hostname)
-        elif choice == '4':
+        elif choice == 4:
             spider(hostname)
         else:
             print("Wrong choice")
