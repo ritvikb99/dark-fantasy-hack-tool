@@ -200,7 +200,7 @@ def spider(host):
 def email(host):
     clear_scr()
 
-    depth = input("Enter the depth level in numbers: ")
+    depth = spider(host)
     count = 1
     with Path("emails.txt").open("w+") as emails:
         print("[*] Email addresses found on page: ")
@@ -216,7 +216,7 @@ def email(host):
                     continue
 
                 try:
-                    cont = html2text(e.read())
+                    cont = html2text(e.read().decode())
                 except UnicodeDecodeError:
                     try:
                         cont = html2text(
@@ -229,6 +229,7 @@ def email(host):
 
                 cont = cont.splitlines()
                 for line in cont:
+                    line = str(line)
                     if '@' in line:
                         print(line)
                         emails.write(line+"\n")
