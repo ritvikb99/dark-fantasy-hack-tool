@@ -172,15 +172,15 @@ def spider(host):
     href_pattern = re.compile('''href=["'](.[^"']+)["']''')
     url = "http://"+host
     with Path(f"depth1.txt").open('w') as out_file:
-        for i in href_pattern.findall(urllib.request.urlopen(url).read(), re.I):
+        for i in href_pattern.findall(str(urllib.request.urlopen(url).read()), re.I):
             if "http" not in i:
                 i = "http://"+host+i
             print(i)
             out_file.write(i+'\n')
     while(count < int(depth)):
         with Path("depth"+str(count)+".txt").open() as read_file:
-            with Path("depth"+str(count+1)+".txt", "w+") as write_file:
-                read = out_file.read().splitlines()
+            with Path("depth"+str(count+1)+".txt").open("w+") as write_file:
+                read = read_file.read().splitlines()
                 if not read:
                     print("\n****Finished****")
                     return depth
@@ -188,7 +188,7 @@ def spider(host):
                     if "http" not in link:
                         link = "http://"+host+link
                     try:
-                        for k in href_pattern.findall(urllib.request.urlopen(link).read(), re.I):
+                        for k in href_pattern.findall(str(urllib.request.urlopen(link).read()), re.I):
                             print(k)
                             write_file.write(k+"\n")
                     except:
