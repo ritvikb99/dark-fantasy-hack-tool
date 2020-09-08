@@ -8,7 +8,7 @@ Written by [@ritvikb99](https://github.com/ritvikb99) and [@CodesWhite](https://
     $ pipenv install
 or:
 
-	$ pip install -r requirements.txt
+	$ pip3 install -r requirements.txt
 
 ## Features:
 - DOS Tool: To take down small websites by flooding with HTTP connections.
