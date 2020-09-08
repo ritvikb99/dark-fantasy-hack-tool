@@ -255,8 +255,8 @@ def main():
         except (ValueError, EOFError, KeyboardInterrupt):
             return print('\n[!] Interrupted!')
 
-        if choice not in range(6):
-            return print('Bye!')
+        if choice not in range(7):
+            return print('Invalid choice')
 
         hostname = ask_host()
         if choice == 1:
@@ -272,7 +272,7 @@ def main():
         elif choice == 4:
             spider(hostname)
         else:
-            print("Wrong choice")
+            print("Invalid choice")
 
 
 if __name__ == '__main__':
