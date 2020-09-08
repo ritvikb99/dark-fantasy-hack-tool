@@ -1,6 +1,7 @@
 # DARK FANTASY HACK TOOL
 Written by [@ritvikb99](https://github.com/ritvikb99) and [@CodesWhite](https://github.com/codeswhite)
 
+Requirements file idea given by [@Swastik2561](https://github.com/Swastik2561)
 #### For security purposes only !
 
 ## Installation:
