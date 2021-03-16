@@ -1,4 +1,13 @@
-.vscode/
+.idea/
+*.egg
+*.egg-info
+dist
+eggs
+sdist
+develop-eggs
+#make.bat
+build*
+#Makefile
+__pycache__
+.coverage
 
-*.pyc
-*/__pycache__
