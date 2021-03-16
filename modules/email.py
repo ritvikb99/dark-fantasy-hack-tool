@@ -1,7 +1,7 @@
 from pathlib import Path
 from html2text import html2text
-from modules.spider import spider
-from modules.clear_scr import clear_scr
+from .spider import spider
+from .clear_scr import clear_scr
 import urllib.request
 
 

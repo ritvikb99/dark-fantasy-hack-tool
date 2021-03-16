@@ -1,6 +1,6 @@
 import socket
 from datetime import datetime
-from modules.clear_scr import clear_scr
+from .clear_scr import clear_scr
 
 
 def scanner(host):
@@ -16,8 +16,7 @@ def scanner(host):
         port2 += 1
         ports = list(range(port1, port2))
     elif type_of_scan == 3:
-        ports = []
-        ports.append(int(input("Enter the port to scan: ")))
+        ports = [int(input("Enter the port to scan: "))]
     elif type_of_scan == 4:
         ports = [1, 5, 7, 18, 20, 21, 22, 23, 25, 43, 42, 53, 80, 109,
                  110, 115, 118, 443, 194, 161, 445, 156, 137, 139, 3306]
@@ -42,11 +41,12 @@ def scanner(host):
             sock.close()
 
     except KeyboardInterrupt:
-        return print("You pressed Ctrl+C")
+        print("You pressed Ctrl+C")
+        exit(1)
     except socket.gaierror:
-        return print('Hostname could not be resolved. Exiting')
+        raise
     except socket.error:
-        return print("Couldn't connect to server")
+        raise
 
     t2 = datetime.now()
     timetaken = t2-t1

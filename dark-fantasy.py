@@ -17,10 +17,11 @@ def ask_host():
 
 def main():
     while 1:
-        print("-"*60+"\n")
+        print("-" * 60 + "\n")
         print("                  Dark Fantasy - Hack Tool                    ")
-        print("-"*60+"\n")
-        print("1.Port Scanning\n2.DDOS\n3.Banner Grabbing\n4.Web spider(gather all URLs for web hacking)\n5.FTP Password Cracker\n6.Email Scraping")
+        print("-" * 60 + "\n")
+        print(
+            "1.Port Scanning\n2.DDOS\n3.Banner Grabbing\n4.Web spider(gather all URLs for web hacking)\n5.FTP Password Cracker\n6.Email Scraping")
         try:
             choice = int(input("Enter Your Choice: "))
         except (ValueError, EOFError, KeyboardInterrupt):
@@ -30,21 +31,21 @@ def main():
             return print('Invalid choice')
 
         hostname = ask_host()
-        if choice == 1:
-            scanner(hostname)
-        elif choice == 6:
-            email(hostname)
-        elif choice == 3:
-            banner(hostname)
-        elif choice == 5:
-            ftp(hostname)
-        elif choice == 2:
-            dos(hostname)
-        elif choice == 4:
-            spider(hostname)
-        else:
-            print("Invalid choice")
+        # Use a dict instead of several if-elses
+        choices = {1: scanner(hostname),
+                   6: email(hostname),
+                   3: banner(hostname),
+                   5: ftp(hostname),
+                   2: dos(hostname),
+                   4: spider(hostname)}
+        # Raise an error if not in choices not print
+
+        if choice not in choices:
+            raise ValueError("You chose {} which is not valid".format(choice))
+
+        choices[choice]
 
 
 if __name__ == '__main__':
     main()
+

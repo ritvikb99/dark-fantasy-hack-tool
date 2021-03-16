@@ -1,5 +1,5 @@
 import socket
-from modules.clear_scr import clear_scr
+from .clear_scr import clear_scr
 
 
 def banner(host):

@@ -5,7 +5,9 @@ def ask_file():
     while 1:
         path = Path(input(
             f"Enter the file name (eg: pass.txt, wordlist.txt)\n>"))
-        if not path.is_file():
-            print('[!] No such file!')
-            continue
-        return path
+        try:
+            path.is_file()
+        except:
+            raise FileNotFoundError('[!] No such file!')
+        else:
+            return path
