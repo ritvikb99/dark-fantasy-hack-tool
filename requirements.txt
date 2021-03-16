@@ -1,2 +1,2 @@
-html2text
+html2text==2020.1.16
 
