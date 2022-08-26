@@ -1,5 +1,5 @@
 # DARK FANTASY HACK TOOL
-Written by [@ritvikb99](https://github.com/ritvikb99) and [@CodesWhite](https://github.com/codeswhite)
+Written by [@ritvikb99](https://github.com/ritvikb99) and [@CodesWhite](https://github.com/codeswhite) and [@meuzgebre](https://github.com/meuzgebre)
 
 Requirements file idea given by [@Swastik2561](https://github.com/Swastik2561)
 #### For security purposes only !
@@ -20,8 +20,10 @@ or:
   
 - Banner Grabber: To get the service or software running on a port.
   
-    (After knowing the software (run google) for its vulnerabilities.)
+    (After knowing the software (search on google) for its vulnerabilities.)
     
 - Web Spider: For gathering web application hacking information.
   
 - Email scraper: To get all emails related to a website
+
+- Subdomain Scanner: Scan for subdomains of a website
