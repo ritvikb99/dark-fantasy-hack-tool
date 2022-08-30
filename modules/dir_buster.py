@@ -40,7 +40,7 @@ def scan_urls(domain_name):
 
     # Check doman name pattern matches
 
-    paths = get_wordlist('wordlist.txt')
+    paths = get_wordlist('modules/wordlist.txt')
     url_list = []    # list of all valid urls
     valid_url = 0    # total number of valid urls found
 
@@ -52,7 +52,7 @@ def scan_urls(domain_name):
 
         try:
 
-            print ('############################## Scanning Starts ##############################')
+            print ('############################## Brutforcing Started ##############################')
             # Sending get request to url
             response = requests.get(url)
 
@@ -68,6 +68,3 @@ def scan_urls(domain_name):
             pass
 
     return url_list
-
-if __name__ == '__main__':
-    scan_urls('python.org')
