@@ -9,6 +9,9 @@ autopep8 = "*"
 
 [packages]
 html2text = "*"
+requests = "*"
+datetime = "*"
+termcolor = "*"
 
 [requires]
 python_version = "3.8"
