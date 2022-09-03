@@ -27,3 +27,5 @@ or:
 - Email scraper: To get all emails related to a website
 
 - Subdomain Scanner: Scan for subdomains of a website
+
+- Dirbuster: Scan for directories of a website
