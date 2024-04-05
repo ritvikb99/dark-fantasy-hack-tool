@@ -7,6 +7,7 @@ from modules.spider import spider
 from modules.email import email
 from modules.subdomain_scanner import scan_subdomains
 from modules.dir_buster import scan_urls
+from modules.whois_lookup import whois_lookup
 
 
 def ask_host():
@@ -22,13 +23,13 @@ def main():
         print("-"*60+"\n")
         print("                  Dark Fantasy - Hack Tool                    ")
         print("-"*60+"\n")
-        print("1.Port Scanning\n2.DDOS\n3.Banner Grabbing\n4.Web spider(gather all URLs for web hacking)\n5.FTP Password Cracker\n6.Email Scraping\n7.Subdomain Scanner\n8.Website Directory Buster")
+        print("1.Port Scanning\n2.DDOS\n3.Banner Grabbing\n4.Web spider(gather all URLs for web hacking)\n5.FTP Password Cracker\n6.Email Scraping\n7.Subdomain Scanner\n8.Website Directory Buster\n9.Whois Lookup")
         try:
             choice = int(input("Enter Your Choice: "))
         except (ValueError, EOFError, KeyboardInterrupt):
             return print('\n[!] Interrupted! or Wrong Value')
 
-        if choice not in range(9):
+        if choice not in range(10):
             return print('Invalid choice')
 
         hostname = ask_host()
@@ -49,6 +50,9 @@ def main():
             scan_subdomains(hostname)
         elif choice == 8:            
             scan_urls(hostname)
+        elif choice == 9:
+            whois_lookup(hostname)
+            
         else:
             print("Invalid choice")
 
