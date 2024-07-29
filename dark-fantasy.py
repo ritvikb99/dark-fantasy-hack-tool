@@ -7,7 +7,8 @@ from modules.spider import spider
 from modules.email import email
 from modules.subdomain_scanner import scan_subdomains
 from modules.dir_buster import scan_urls
-
+from modules.ip_to_domain import ip_to_domain
+from modules.domain_to_ip import domain_to_ip
 
 def ask_host():
     hostname = input(
@@ -22,13 +23,15 @@ def main():
         print("-"*60+"\n")
         print("                  Dark Fantasy - Hack Tool                    ")
         print("-"*60+"\n")
-        print("1.Port Scanning\n2.DDOS\n3.Banner Grabbing\n4.Web spider(gather all URLs for web hacking)\n5.FTP Password Cracker\n6.Email Scraping\n7.Subdomain Scanner\n8.Website Directory Buster")
+        print("1.Port Scanning\n2.DDOS\n3.Banner Grabbing\n4.Web spider(gather all URLs for web hacking)\n5.FTP Password Cracker\n6.Email Scraping\n7.Subdomain Scanner\n8.Website Directory Buster\n9. IP to Hostname\n10. Hostname to IP\n")
         try:
             choice = int(input("Enter Your Choice: "))
-        except (ValueError, EOFError, KeyboardInterrupt):
-            return print('\n[!] Interrupted! or Wrong Value')
+        except (ValueError, EOFError):
+            return print('\n[!] Wrong Value')
+        except KeyboardInterrupt:
+            return print('\n[!] Recieved \"Ctrl+C\". Quitting...')
 
-        if choice not in range(9):
+        if choice not in range(11):
             return print('Invalid choice')
 
         hostname = ask_host()
@@ -49,9 +52,14 @@ def main():
             scan_subdomains(hostname)
         elif choice == 8:            
             scan_urls(hostname)
+        elif choice == 9:
+            # Only accepts IPs. e.x. 127.0.0.1
+            ip_to_domain(hostname)
+        elif choice == 10:
+            # Only accepts domains. e.x. www.google.com
+            domain_to_ip(hostname)
         else:
             print("Invalid choice")
-
 
 if __name__ == '__main__':
     main()

@@ -29,3 +29,7 @@ or:
 - Subdomain Scanner: Scan for subdomains of a website
 
 - Dirbuster: Scan for directories of a website
+
+- IP to Domain: Gets domains from an IP Address.
+
+- Domain to IP: Gets IP Address(s) from a domain.
